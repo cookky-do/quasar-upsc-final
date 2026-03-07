@@ -1,34 +1,19 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    },
-    {
-      "src": "api/generate.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "api/test.js",
-      "use": "@vercel/node"
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "functions": {
+    "api/*.js": {
+      "maxDuration": 30
     }
-  ],
-  "routes": [
+  },
+  "rewrites": [
     {
-      "src": "/api/generate",
-      "dest": "/api/generate"
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
     },
     {
-      "src": "/api/test",
-      "dest": "/api/test"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/dist/$1"
+      "source": "/(.*)",
+      "destination": "/dist/index.html"
     }
   ]
 }
