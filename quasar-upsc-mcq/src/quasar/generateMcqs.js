@@ -57,7 +57,20 @@ export async function generatePracticeMcqs({ bookName, chapterName, topic, parag
     }),
   })
 
-  if (!res.ok) throw new Error('API unavailable. Please run locally: Open Terminal 1: npm run api | Terminal 2: npm run dev | Visit http://localhost:5173')
+  if (!res.ok) {
+    throw new Error(
+      'API not available on Vercel. To use the app:\n\n' +
+      '1. Open PowerShell Terminal 1:\n' +
+      '   cd c:\\Users\\ATC\\Desktop\\final\\quasar-upsc-mcq\n' +
+      '   $env:GROQ_API_KEY=\x27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\x27\n' +
+      '   npm run api\n\n' +
+      '2. Open PowerShell Terminal 2:\n' +
+      '   cd c:\\Users\\ATC\\Desktop\\final\\quasar-upsc-mcq\n' +
+      '   npm run dev\n\n' +
+      '3. Visit http://localhost:5173\n\n' +
+      'Rest API works perfectly when run locally!'
+    )
+  }
   const data = await res.json()
   return validatePracticePayload(data)
 }
@@ -76,7 +89,20 @@ export async function generateMcqsFromExtractedText({ paragraphText, paragraphIn
     }),
   })
 
-  if (!res.ok) throw new Error('API unavailable. Please run locally: Open Terminal 1: npm run api | Terminal 2: npm run dev | Visit http://localhost:5173')
+  if (!res.ok) {
+    throw new Error(
+      'API not available on Vercel. To use the app:\n\n' +
+      '1. Open PowerShell Terminal 1:\n' +
+      '   cd c:\\Users\\ATC\\Desktop\\final\\quasar-upsc-mcq\n' +
+      '   $env:GROQ_API_KEY=\x27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\x27\n' +
+      '   npm run api\n\n' +
+      '2. Open PowerShell Terminal 2:\n' +
+      '   cd c:\\Users\\ATC\\Desktop\\final\\quasar-upsc-mcq\n' +
+      '   npm run dev\n\n' +
+      '3. Visit http://localhost:5173\n\n' +
+      'Rest API works perfectly when run locally!'
+    )
+  }
   const data = await res.json()
   return validatePracticePayload(data)
 }
