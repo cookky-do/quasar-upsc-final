@@ -73,7 +73,7 @@ export async function generatePracticeMcqs({ bookName, chapterName, topic, parag
       'API not available on Vercel. To use the app:\n\n' +
       '1. Open PowerShell Terminal 1:\n' +
       '   cd c:\\Users\\ATC\\Desktop\\final\\quasar-upsc-mcq\n' +
-      '   $env:GROQ_API_KEY=\x27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\x27\n' +
+      '   $env:GROQ_API_KEY=\x27[your-groq-api-key]\x27\n' +
       '   npm run api\n\n' +
       '2. Open PowerShell Terminal 2:\n' +
       '   cd c:\\Users\\ATC\\Desktop\\final\\quasar-upsc-mcq\n' +
@@ -105,7 +105,7 @@ export async function generateMcqsFromExtractedText({ paragraphText, paragraphIn
       'API not available on Vercel. To use the app:\n\n' +
       '1. Open PowerShell Terminal 1:\n' +
       '   cd c:\\Users\\ATC\\Desktop\\final\\quasar-upsc-mcq\n' +
-      '   $env:GROQ_API_KEY=\x27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\x27\n' +
+      '   $env:GROQ_API_KEY=\x27[your-groq-api-key]\x27\n' +
       '   npm run api\n\n' +
       '2. Open PowerShell Terminal 2:\n' +
       '   cd c:\\Users\\ATC\\Desktop\\final\\quasar-upsc-mcq\n' +

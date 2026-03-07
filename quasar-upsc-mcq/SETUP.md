@@ -7,7 +7,7 @@
 ### Step 1: Start the Backend API
 ```powershell
 cd c:\Users\ATC\Desktop\final\quasar-upsc-mcq
-$env:GROQ_API_KEY='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'
+$env:GROQ_API_KEY='[your-groq-api-key]'
 npm run api
 ```
 Wait for: `✅ Server running on http://localhost:8787`

@@ -152,7 +152,7 @@
 
 ### Groq (AI)
 ```
-├── API key: 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 ✅
+├── API key: [your-groq-api-key] ✅
 ├── Model: llama-3.3-70b-versatile ✅
 ├── Default quota: 10k requests/day ✅
 └── Status: READY

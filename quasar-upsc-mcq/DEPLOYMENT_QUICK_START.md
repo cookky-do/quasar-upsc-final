@@ -27,7 +27,7 @@
 
 **Set Environment Variable in Railway:**
 - In Railway dashboard → Variables
-- Add: `GROQ_API_KEY = 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`
+- Add: `GROQ_API_KEY = [your-groq-api-key]`
 - Save
 
 ---
@@ -167,7 +167,7 @@ You can also run locally without Railway:
 ```powershell
 # Terminal 1 - API Server
 cd c:\Users\ATC\Desktop\final\quasar-upsc-mcq
-$env:GROQ_API_KEY='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'
+$env:GROQ_API_KEY='[your-groq-api-key]'
 npm run api
 
 # Terminal 2 - Frontend  

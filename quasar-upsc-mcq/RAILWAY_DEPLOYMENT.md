@@ -37,7 +37,7 @@ The app detects the configuration from:
 ### 4. Set Environment Variables
 In Railway dashboard:
 ```
-GROQ_API_KEY = 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
+GROQ_API_KEY = [your-groq-api-key]
 NODE_ENV = production
 ```
 
@@ -117,7 +117,7 @@ Open browser DevTools (F12) → Network tab:
 ```powershell
 # Terminal 1 - API Server
 cd c:\Users\ATC\Desktop\final\quasar-upsc-mcq
-$env:GROQ_API_KEY='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'
+   $env:GROQ_API_KEY='[your-groq-api-key]'
 npm run api
 # Runs on http://localhost:8787
 

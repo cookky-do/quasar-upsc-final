@@ -16,7 +16,7 @@ Use this to track progress as you deploy to production!
 - [ ] **1.8** Once deployed, go to Railway dashboard → Variables
 - [ ] **1.9** Add new variable:
   - Name: `GROQ_API_KEY`
-  - Value: `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`
+  - Value: `[your-groq-api-key]`
 - [ ] **1.10** Click "Save"
 - [ ] **1.11** Go back to Railway project → Settings
 - [ ] **1.12** Copy the **Railway URL** (looks like: `https://your-app-name-production.railway.app`)
