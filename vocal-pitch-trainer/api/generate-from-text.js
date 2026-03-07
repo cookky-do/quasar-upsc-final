@@ -1,26 +1,3 @@
-const Groq = require('groq-sdk');
-
-function stripCodeFences(text) {
-  if (typeof text !== 'string') return ''
-  return text
-    .replace(/^\s*```(?:json)?\s*/i, '')
-    .replace(/\s*```\s*$/i, '')
-    .trim()
-}
-
-function tryExtractJsonObject(text) {
-  const s = typeof text === 'string' ? text : ''
-  const start = s.indexOf('{')
-  const end = s.lastIndexOf('}')
-  if (start === -1 || end === -1 || end <= start) return null
-  return s.slice(start, end + 1)
-}
-
-function requireString(v, name) {
-  if (typeof v !== 'string' || !v.trim()) throw new Error(`Invalid ${name}`)
-  return v.trim()
-}
-
 module.exports = async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', 'true')
@@ -41,6 +18,29 @@ module.exports = async function handler(req, res) {
   }
 
   try {
+    const Groq = (await import('groq-sdk')).default
+    
+    function stripCodeFences(text) {
+      if (typeof text !== 'string') return ''
+      return text
+        .replace(/^\s*```(?:json)?\s*/i, '')
+        .replace(/\s*```\s*$/i, '')
+        .trim()
+    }
+
+    function tryExtractJsonObject(text) {
+      const s = typeof text === 'string' ? text : ''
+      const start = s.indexOf('{')
+      const end = s.lastIndexOf('}')
+      if (start === -1 || end === -1 || end <= start) return null
+      return s.slice(start, end + 1)
+    }
+
+    function requireString(v, name) {
+      if (typeof v !== 'string' || !v.trim()) throw new Error(`Invalid ${name}`)
+      return v.trim()
+    }
+
     const groqKey = process.env.GROQ_API_KEY
     if (!groqKey) {
       return res.status(500).json({ error: 'Missing GROQ_API_KEY on server' })
@@ -93,7 +93,7 @@ Respond as JSON with this exact structure:
 }
 
 STRICT REQUIREMENTS FOR JSON:
-- options MUST be an ARRAY of 4 strings (not object): ["A. ...", "B. ...", "C. ...", "D. ..."]
+- options MUST be an ARRAY of 4  strings (not object): ["A. ...", "B. ...", "C. ...", "D. ..."]
 - answer MUST be single letter A, B, C, or D (not "A." or full text)
 - Return ONLY JSON, no markdown, no explanations before/after`
 
@@ -131,7 +131,7 @@ STRICT REQUIREMENTS FOR JSON:
 
     return res.json(parsed)
   } catch (e) {
-    console.error('[/api/generate/from-text] Error:', e?.message || String(e))
+    console.error('[/api/generate/from-text] Error:', e?.message || String(e), e)
     return res.status(500).json({ error: `Generation failed: ${e?.message || 'Unknown'}` })
   }
 }
