@@ -147,6 +147,56 @@ Push changes to GitHub - Vercel auto-redeploys ✅
 ## Common Errors & Fixes
 
 ### ❌ Error: "Cannot find module 'dotenv'"
+Error: Function Runtimes must have a valid version, for example `now-php@1.0.0`.
+PS C:\Users\ATC\Desktop\final>
+ 
+ 
+s:753:9)modules/vercel/dist/chunks/chunk-OYLVZVKK.js:310:28)el/dist/chunks/chunk-OYLVZVKK.js:262:18)modules/vercel/dist/chunks/chunk-OYLVZVKK.js:310:28)el/dist/chunks/chunk-OYLVZVKK.js:262:18)modules/vercel/dist/chunks/chunk-OYLVZVKK.js:310:28)el/dist/chunks/chunk-OYLVZVKK.js:262:18)el/dist/chunks/chunk-OYLVZVKK.js:262:18)el/dist/chunks/chunk-OYLVZVKK.js:262:18)53:29)Error: Function Runtimes must have a valid version, for example `now-php@1.0.0`.PS C:\Users\ATC\Desktop\final> 
+91 x 4
+39
+vercel 2>&1 | head -50
+vercel 2>&1 | Select-Object -First 30
+Found it! ❌ The error is in your vercel.json file:
+
+The nodejs18.x format is outdated. Let me fix it:
+
+Now commit and redeploy:
+
+vercel --prod 2>&1 | Select-Object -First 50
+vercel --prod 2>&1 | Select-Object -First 60
+Good progress! Now remove the secret reference from vercel.json (we'll set it in Vercel dashboard):
+
+vercel env add GROQ_API_KEY --prod 2>&1
+vercel --prod 2>&1 | Select-Object -First 80
+The issue is that Vercel can't find vite because it's installing dependencies in the wrong directory. Let me fix the vercel.json to set the correct root:
+
+cd c:\Users\ATC\Desktop\final\vocal-pitch-trainer ; vercel --prod 2>&1 | tail -100
+echo "y" | vercel --prod 2>&1 | tail -120
+echo "y" | vercel --prod 2>&1 | Select-Object -Last 120
+🎉 Frontend deployed successfully!
+
+URL: https://vocal-pitch-trainer.vercel.app
+
+But now we need to set up the backend API. The frontend is deployed, but the API routes need configuration. Let me create the proper API structure:
+
+🎉 Deployment successful!
+
+Live URLs:
+
+Frontend: https://vocal-pitch-trainer.vercel.app
+API: https://vocal-pitch-trainer.vercel.app/api/generate
+Now let me test the API to make sure it's working:
+
+$body = @{bookName="Indian Polity";chapterName="Fundamental Rights";topic="Writs";paragraphNumber=1} | ConvertTo-Json; (Invoke-WebRequest -Uri "https://vocal-pitch-trainer.vercel.app/api/generate" -Method POST -ContentType "application/json" -Body $body -TimeoutSec 60).Content | ConvertFrom-Json | ConvertTo-Json -Depth 3
+The API is responding but missing the GROQ_API_KEY. Let me verify it's set in Vercel:
+
+Now redeploy to apply the environment variable:
+
+$body = @{bookName="Indian Polity";chapterName="Fundamental Rights";topic="Writs";paragraphNumber=1} | ConvertTo-Json; (Invoke-WebRequest -Uri "https://vocal-pitch-trainer.vercel.app/api/generate" -Method POST -ContentType "application/json" -Body $body -TimeoutSec 60).Content | ConvertFrom-Json | ConvertTo-Json -Depth 2 | Select-Object -First 40
+Start-Sleep -Seconds 5; $body = @{bookName="Indian Polity";chapterName="Fundamental Rights";topic="Writs";paragraphNumber=1} | ConvertTo-Json; (Invoke-WebRequest -Uri "https://vocal-pitch-trainer.vercel.app/api/generate" -Method POST -ContentType "application/json" -Body $body -TimeoutSec 90).Content | ConvertFrom-Json | ConvertTo-Json -Depth 2
+Let me test locally to debug the API issue:
+
+$env:GROQ_API_KEY='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'; Start-Job -ScriptBlock { cd c:\Users\ATC\Desktop\final\vocal-pitch-trainer; npm run dev 2>&1 | Select-Object -First 20 } | Wait-Job; Start-Sleep -Seconds 8; $body = @{bookName="Indian Polity";chapterName="Fundamental Rights";topic="Writs";paragraphNumber=1} | ConvertTo-Json; (Invoke-WebRequest -Uri "http://localhost:5173/api/generate" -Method POST -ContentType "application/json" -Body $body -TimeoutSec 60).Content | ConvertFrom-Json | ConvertTo-Json -Depth 2 | Select-Object 
 **Fix:** Add to `server.js` start:
 ```javascript
 import dotenv from 'dotenv'

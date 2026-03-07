@@ -1,4 +1,4 @@
-import Groq from 'groq-sdk'
+const Groq = require('groq-sdk');
 
 function stripCodeFences(text) {
   if (typeof text !== 'string') return ''
@@ -21,7 +21,7 @@ function requireString(v, name) {
   return v.trim()
 }
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', 'true')
   res.setHeader('Access-Control-Allow-Origin', '*')
