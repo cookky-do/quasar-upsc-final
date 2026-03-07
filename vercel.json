@@ -2,11 +2,8 @@
   "version": 2,
   "buildCommand": "cd vocal-pitch-trainer && npm run build",
   "outputDirectory": "vocal-pitch-trainer/dist",
-  "functions": {
-    "vocal-pitch-trainer/server.js": {
-      "runtime": "nodejs20.x",
-      "maxDuration": 30
-    }
+  "env": {
+    "GROQ_API_KEY": "@groq_api_key"
   },
   "rewrites": [
     {
@@ -15,7 +12,7 @@
     },
     {
       "source": "/(.*)",
-      "destination": "vocal-pitch-trainer/dist/index.html"
+      "destination": "/vocal-pitch-trainer/dist/index.html"
     }
   ]
 }
