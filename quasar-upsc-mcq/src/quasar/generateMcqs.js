@@ -3,10 +3,10 @@ function getApiBaseUrl() {
   // If running on Vercel production with Railway backend
   if (import.meta.env.PROD) {
     // Use the Railway backend URL from Vercel env variable
-    return import.meta.env.VITE_API_URL || 'http://localhost:8787'
+    return import.meta.env.VITE_API_URL || 'https://quasar-upsc-mcq-2.onrender.com'
   }
   // Development - use localhost
-  return 'http://localhost:8787'
+  return 'https://quasar-upsc-mcq-2.onrender.com'
 }
 
 function stripCodeFences(text) {
@@ -78,7 +78,7 @@ export async function generatePracticeMcqs({ bookName, chapterName, topic, parag
       '2. Open PowerShell Terminal 2:\n' +
       '   cd c:\\Users\\ATC\\Desktop\\final\\quasar-upsc-mcq\n' +
       '   npm run dev\n\n' +
-      '3. Visit http://localhost:5173\n\n' +
+      '3. Visit https://quasar-upsc-mcq-2.onrender.com' +
       'Rest API works perfectly when run locally!'
     )
   }
@@ -110,7 +110,7 @@ export async function generateMcqsFromExtractedText({ paragraphText, paragraphIn
       '2. Open PowerShell Terminal 2:\n' +
       '   cd c:\\Users\\ATC\\Desktop\\final\\quasar-upsc-mcq\n' +
       '   npm run dev\n\n' +
-      '3. Visit http://localhost:5173\n\n' +
+      '3. Visit https://quasar-upsc-mcq-2.onrender.com' +
       'Rest API works perfectly when run locally!'
     )
   }
