@@ -1,4 +1,4 @@
-const url = 'http://localhost:8787/api/generate'
+const url = 'https://quasar-upsc-final.onrender.com'
 
 const payload = {
   bookName: 'Test Book',
