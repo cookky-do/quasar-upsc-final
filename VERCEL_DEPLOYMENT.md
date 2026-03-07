@@ -196,7 +196,7 @@ $body = @{bookName="Indian Polity";chapterName="Fundamental Rights";topic="Writs
 Start-Sleep -Seconds 5; $body = @{bookName="Indian Polity";chapterName="Fundamental Rights";topic="Writs";paragraphNumber=1} | ConvertTo-Json; (Invoke-WebRequest -Uri "https://vocal-pitch-trainer.vercel.app/api/generate" -Method POST -ContentType "application/json" -Body $body -TimeoutSec 90).Content | ConvertFrom-Json | ConvertTo-Json -Depth 2
 Let me test locally to debug the API issue:
 
-$env:GROQ_API_KEY='process.env.VARIABLE_NAME'; Start-Job -ScriptBlock { cd c:\Users\ATC\Desktop\final\vocal-pitch-trainer; npm run dev 2>&1 | Select-Object -First 20 } | Wait-Job; Start-Sleep -Seconds 8; $body = @{bookName="Indian Polity";chapterName="Fundamental Rights";topic="Writs";paragraphNumber=1} | ConvertTo-Json; (Invoke-WebRequest -Uri "http://localhost:5173/api/generate" -Method POST -ContentType "application/json" -Body $body -TimeoutSec 60).Content | ConvertFrom-Json | ConvertTo-Json -Depth 2 | Select-Object 
+$env:GROQ_API_KEY='process.env.VARIABLE_NAME'; Start-Job -ScriptBlock { cd c:\Users\ATC\Desktop\final\vocal-pitch-trainer; npm run dev 2>&1 | Select-Object -First 20 } | Wait-Job; Start-Sleep -Seconds 8; $body = @{bookName="Indian Polity";chapterName="Fundamental Rights";topic="Writs";paragraphNumber=1} | ConvertTo-Json; (Invoke-WebRequest -Uri /api/generate" -Method POST -ContentType "application/json" -Body $body -TimeoutSec 60).Content | ConvertFrom-Json | ConvertTo-Json -Depth 2 | Select-Object 
 **Fix:** Add to `server.js` start:
 ```javascript
 import dotenv from 'dotenv'
@@ -222,7 +222,7 @@ if (!process.env.VERCEL) {
 app.use(cors({
   origin: [
     'https://your-frontend.vercel.app',
-    'http://localhost:5173'
+    
   ]
 }))
 ```

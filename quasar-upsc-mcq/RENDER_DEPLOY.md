@@ -27,7 +27,7 @@ Click **"Create Web Service"** and wait ~2 minutes for deployment
 ## Step 4: Get Your Render URL
 Once deployed (green "Live" status):
 - Go to your service dashboard
-- Copy the URL (looks like: `https://quasar-upsc-mcq.onrender.com`)
+- Copy the URL (looks like: 
 
 ## Step 5: Update Vercel
 1. Go to https://vercel.com/dashboard
@@ -35,7 +35,7 @@ Once deployed (green "Live" status):
 3. Settings → Environment Variables
 4. Add/Update:
    - **Name**: `VITE_API_URL`
-   - **Value**: Your Render URL (e.g., `https://quasar-upsc-mcq.onrender.com`)
+   - **Value**: Your Render URL (e.g.,
 5. Click "Save"
 6. Go to Deployments → Latest → Click 3-dots → Redeploy
 

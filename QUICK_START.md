@@ -43,7 +43,7 @@ npm run api
 ```
 
 ### Then:
-- Open browser to `localhost:5173` (or Vite's output)
+- Open browser to  (or Vite's output)
 - Choose "OCR Practice Mode"
 - Upload an image
 - Click "Extract Text & Start"

@@ -10,14 +10,14 @@ cd c:\Users\ATC\Desktop\final\quasar-upsc-mcq
 $env:GROQ_API_KEY='[your-groq-api-key]'
 npm run api
 ```
-Wait for: `✅ Server running on http://localhost:8787`
+Wait for: `✅ Server running on 
 
 ### Step 2: Open the App in Another Terminal
 ```powershell
 cd c:\Users\ATC\Desktop\final\quasar-upsc-mcq
 npm run dev
 ```
-Wait for: `http://localhost:5173` then click the link
+Wait for: ` then click the link
 
 ## ✨ Features
 
@@ -57,7 +57,7 @@ Wait for: `http://localhost:5173` then click the link
 
 **Generate from manual selection:**
 ```bash
-POST http://localhost:8787/api/generate
+POST /api/generate
 Content-Type: application/json
 
 {
@@ -70,7 +70,7 @@ Content-Type: application/json
 
 **Generate from OCR text:**
 ```bash
-POST http://localhost:8787/api/generate/from-text
+POST /api/generate/from-text
 Content-Type: application/json
 
 {
