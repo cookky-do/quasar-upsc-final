@@ -1,13 +1,8 @@
-import { Groq } from 'groq-sdk'
-
-export const config = {
-  runtime: 'nodejs18.x'
-}
-
 export default async function handler(req, res) {
+  // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end()
@@ -18,21 +13,28 @@ export default async function handler(req, res) {
   }
 
   try {
-    if (!process.env.GROQ_API_KEY) {
-      return res.status(500).json({ error: 'Missing GROQ_API_KEY' })
-    }
-
     const { bookName, chapterName, topic = '', paragraphNumber } = req.body
 
+    // Validate input
     if (!bookName || !chapterName || !paragraphNumber) {
-      return res.status(400).json({ error: 'Missing required fields' })
+      return res.status(400).json({ 
+        error: 'Missing required fields',
+        received: { bookName, chapterName, topic, paragraphNumber }
+      })
     }
 
+    // Check API key
+    if (!process.env.GROQ_API_KEY) {
+      return res.status(500).json({ error: 'GROQ_API_KEY not configured' })
+    }
+
+    // Dynamic import to avoid bundling issues
+    const { default: Groq } = await import('groq-sdk')
     const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
 
-    const prompt = `Generate 3 UPSC MCQs about ${bookName} - ${chapterName}, topic: ${topic}, paragraph ${paragraphNumber}. 
+    const prompt = `Generate 3 UPSC MCQs about ${bookName} - ${chapterName}, topic: ${topic}, paragraph ${paragraphNumber}.
 
-Return ONLY JSON in this format:
+Return ONLY this JSON format:
 {
   "book_name": "${bookName}",
   "chapter_name": "${chapterName}",
@@ -52,16 +54,29 @@ Return ONLY JSON in this format:
     const completion = await groq.chat.completions.create({
       model: 'llama-3.3-70b-versatile',
       temperature: 0.4,
-      messages: [{ role: 'user', content: prompt }],
+      messages: [{ role: 'user', content: prompt }]
     })
 
     const content = completion.choices[0].message.content
-    const cleaned = content.replace(/```json\n?|\n?```/g, '').trim()
     
-    return res.json(JSON.parse(cleaned))
+    // Clean and parse JSON
+    let cleaned = content.replace(/```json\n?|\n?```/g, '').trim()
+    
+    // Try to extract JSON if there's extra text
+    const jsonMatch = cleaned.match(/\{[\s\S]*\}/)
+    if (jsonMatch) {
+      cleaned = jsonMatch[0]
+    }
+
+    const parsed = JSON.parse(cleaned)
+    
+    return res.json(parsed)
 
   } catch (error) {
     console.error('API Error:', error)
-    return res.status(500).json({ error: error.message })
+    return res.status(500).json({ 
+      error: 'Failed to generate questions',
+      details: error.message 
+    })
   }
 }
