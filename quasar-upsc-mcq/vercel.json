@@ -11,12 +11,20 @@
     {
       "src": "api/generate.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "api/test.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/generate",
       "dest": "/api/generate"
+    },
+    {
+      "src": "/api/test",
+      "dest": "/api/test"
     },
     {
       "src": "/(.*)",
