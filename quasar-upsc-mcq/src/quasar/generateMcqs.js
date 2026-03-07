@@ -57,7 +57,7 @@ export async function generatePracticeMcqs({ bookName, chapterName, topic, parag
     }),
   })
 
-  if (!res.ok) throw new Error('Generation failed')
+  if (!res.ok) throw new Error('API unavailable. Please run locally: Open Terminal 1: npm run api | Terminal 2: npm run dev | Visit http://localhost:5173')
   const data = await res.json()
   return validatePracticePayload(data)
 }
@@ -76,7 +76,7 @@ export async function generateMcqsFromExtractedText({ paragraphText, paragraphIn
     }),
   })
 
-  if (!res.ok) throw new Error('Generation failed')
+  if (!res.ok) throw new Error('API unavailable. Please run locally: Open Terminal 1: npm run api | Terminal 2: npm run dev | Visit http://localhost:5173')
   const data = await res.json()
   return validatePracticePayload(data)
 }
