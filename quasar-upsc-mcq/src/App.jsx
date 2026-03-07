@@ -325,7 +325,8 @@ export default function App() {
                 className="group cursor-pointer rounded-3xl border-2 border-purple-400 bg-gradient-to-br from-white via-purple-50 to-purple-100 p-8 shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 transform"
               >
                 <div className="text-5xl mb-4">📘</div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-2">Book Page Practice</h3>
+                <h3 className="text-2xl font-bold text-slate-900 mb-1">Book Page Practice</h3>
+                <p className="text-sm font-semibold text-purple-600 mb-3">(Recommended - our real stuff)</p>
                 <p className="text-slate-700 font-medium mb-4">
                   Upload a page → MCQs generated from the exact content of your book page
                 </p>
@@ -613,7 +614,13 @@ export default function App() {
               <div className="text-lg font-semibold text-white">
                 Ready to start practicing?
               </div>
-              <p className="text-slate-300 text-sm mt-2">Select a practice mode above to begin</p>
+              <p className="text-slate-300 text-sm mt-2 mb-6">Select a practice mode above to begin</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="rounded-full bg-white text-slate-900 px-8 py-3 font-bold hover:bg-slate-100 transition-all duration-200 shadow-lg hover:shadow-xl"
+              >
+                ← Back to Homepage
+              </button>
             </div>
           )}
 
