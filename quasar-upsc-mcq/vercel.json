@@ -3,7 +3,10 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "functions": {
-    "api/**/*.js": {
+    "api/generate.js": {
+      "maxDuration": 30
+    },
+    "api/generate-from-text.js": {
       "maxDuration": 30
     }
   },
