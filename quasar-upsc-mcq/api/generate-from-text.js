@@ -123,6 +123,26 @@ STRICT REQUIREMENTS FOR JSON:
       }
     }
 
+    if (!parsed.questions || !Array.isArray(parsed.questions)) {
+      return res.status(502).json({ error: 'Invalid response structure: missing questions' })
+    }
+    if (parsed.questions.length < 3) {
+      return res.status(502).json({ error: 'Expected at least 3 questions' })
+    }
+
+    for (let i = 0; i < parsed.questions.length; i++) {
+      const q = parsed.questions[i]
+      if (!q || typeof q !== 'object') {
+        return res.status(502).json({ error: `Invalid question structure at index ${i}` })
+      }
+      if (!q.options || !Array.isArray(q.options) || q.options.length !== 4) {
+        return res.status(502).json({ error: `Question ${i} must have exactly 4 options` })
+      }
+      if (!['A', 'B', 'C', 'D'].includes((q.answer || '').toUpperCase())) {
+        return res.status(502).json({ error: `Question ${i} has invalid answer` })
+      }
+    }
+
     // Add required fields for consistency with manual mode validation
     if (!parsed.book_name) parsed.book_name = 'OCR Extracted'
     if (!parsed.chapter_name) parsed.chapter_name = 'OCR Content'

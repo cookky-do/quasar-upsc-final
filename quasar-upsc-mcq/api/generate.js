@@ -46,7 +46,7 @@ module.exports = async function handler(req, res) {
     const paragraphNumberRaw = req.body?.paragraphNumber
     const paragraphNumber = typeof paragraphNumberRaw === 'number' ? paragraphNumberRaw : Number(paragraphNumberRaw)
 
-    if (!Number.isFinite(paragraphNumber) || paragraphNumber < 0) {
+    if (!Number.isFinite(paragraphNumber) || paragraphNumber < 1) {
       return res.status(400).json({ error: 'Invalid paragraphNumber' })
     }
 
@@ -121,6 +121,13 @@ STRICT REQUIREMENTS FOR JSON:
       } catch {
         return res.status(502).json({ error: 'Model returned invalid JSON' })
       }
+    }
+
+    if (!parsed.questions || !Array.isArray(parsed.questions)) {
+      return res.status(502).json({ error: 'Invalid response structure: missing questions' })
+    }
+    if (parsed.questions.length < 3) {
+      return res.status(502).json({ error: 'Expected at least 3 questions' })
     }
 
     return res.json(parsed)

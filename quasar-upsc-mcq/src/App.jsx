@@ -145,8 +145,8 @@ export default function App() {
         paragraphNumber: para,
       })
       setPayload(result)
-    } catch {
-      setError('Could not generate questions. Please try again.')
+    } catch (err) {
+      setError(err?.message || 'Could not generate questions. Please try again.')
     } finally {
       setIsLoading(false)
     }
@@ -244,7 +244,7 @@ export default function App() {
       setPayload(result)
       setCurrentParagraphIndex(index)
     } catch (err) {
-      setError('Could not generate questions for this paragraph. Try the next one.')
+      setError(err?.message || 'Could not generate questions for this paragraph. Try the next one.')
     } finally {
       setIsLoading(false)
     }

@@ -80,7 +80,7 @@ export function splitIntoParagraphs(text) {
     paragraphs = grouped
   }
 
-  return paragraphs.length > 0 ? paragraphs : [text]
+  return paragraphs.length > 0 ? paragraphs : (text.trim().length > 0 ? [text] : [])
 }
 
 /**

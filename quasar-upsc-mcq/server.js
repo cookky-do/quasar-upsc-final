@@ -229,6 +229,11 @@ STRICT REQUIREMENTS FOR JSON:
   }
 })
 
+app.use((err, req, res, next) => {
+  console.error('[Server Error]:', err?.message || String(err), err?.stack)
+  res.status(500).json({ error: err?.message || 'Internal server error' })
+})
+
 const port = Number(process.env.PORT || 8787)
 app.listen(port, () => {
   // Intentionally minimal logs for MVP.
