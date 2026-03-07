@@ -1,8 +1,8 @@
 // Get API base URL based on environment
 function getApiBaseUrl() {
-  // Use Vercel API functions for production
+  // Use Render backend for production (better free tier)
   if (import.meta.env.PROD) {
-    return ''  // Use same domain for Vercel API functions
+    return 'https://quasar-upsc-mcq.onrender.com'
   }
   // Development - use localhost
   return 'http://localhost:8787'
