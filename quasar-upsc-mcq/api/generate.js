@@ -1,3 +1,5 @@
+const Groq = require('groq-sdk').default || require('groq-sdk');
+
 module.exports = async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', 'true')
@@ -18,7 +20,6 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const Groq = (await import('groq-sdk')).default
     
     function stripCodeFences(text) {
       if (typeof text !== 'string') return ''
@@ -132,7 +133,7 @@ STRICT REQUIREMENTS FOR JSON:
 
     return res.json(parsed)
   } catch (e) {
-    console.error('[/api/generate] Error:', e?.message || String(e), e)
-    return res.status(500).json({ error: `Generation failed: ${e?.message || 'Unknown'}` })
+    console.error('[/api/generate] Error:', e?.message || String(e))
+    return res.status(500).json({ error: `Generation failed`, details: e?.message })
   }
 }
