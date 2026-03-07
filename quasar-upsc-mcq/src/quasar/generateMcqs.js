@@ -1,9 +1,8 @@
 // Get API base URL based on environment
 function getApiBaseUrl() {
-  // If running on Vercel production with Railway backend
+  // If running on Vercel production, use relative URL for API functions
   if (import.meta.env.PROD) {
-    // Use the Railway backend URL from Vercel env variable
-    return import.meta.env.VITE_API_URL || https://quasar-upsc-final.onrender.com
+    return ''  // Use same domain for Vercel API functions
   }
   // Development - use localhost
   return 'https://quasar-upsc-final.onrender.com'
@@ -110,7 +109,7 @@ export async function generateMcqsFromExtractedText({ paragraphText, paragraphIn
       '2. Open PowerShell Terminal 2:\n' +
       '   cd c:\\Users\\ATC\\Desktop\\final\\quasar-upsc-mcq\n' +
       '   npm run dev\n\n' +
-      '3. Visit https://quasar-upsc-final.onrender.com +
+      '3. Visit https://quasar-upsc-final.onrender.com\n' +
       'Rest API works perfectly when run locally!'
     )
   }

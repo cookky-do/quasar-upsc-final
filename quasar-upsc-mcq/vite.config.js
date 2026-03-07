@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': 'https://quasar-upsc-final.onrender.com'
+      '/api': process.env.VITE_API_URL || 'https://quasar-upsc-final.onrender.com'
     },
   },
 })
