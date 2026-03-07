@@ -1,8 +1,8 @@
 // Get API base URL based on environment
 function getApiBaseUrl() {
-  // If running on Vercel production, use relative URL for API functions
+  // If running on Vercel production, use Railway backend
   if (import.meta.env.PROD) {
-    return ''  // Use same domain for Vercel API functions
+    return 'https://quasar-upsc-mcq-production.up.railway.app'
   }
   // Development - use localhost
   return 'https://quasar-upsc-final.onrender.com'
