@@ -309,7 +309,56 @@ export default function App() {
           </div>
         </header>
 
-        {/* Mode selection / Reset */}
+        {/* Mode selection header and buttons */}
+        {mode === null && (
+          <div className="mb-12">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-white mb-2">Choose Practice Mode</h2>
+              <p className="text-slate-300">Select how you want to practice for UPSC Prelims</p>
+            </div>
+
+            {/* Two mode options side by side */}
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Book Page Practice */}
+              <div
+                onClick={() => setMode('ocr')}
+                className="group cursor-pointer rounded-3xl border-2 border-purple-400 bg-gradient-to-br from-white via-purple-50 to-purple-100 p-8 shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 transform"
+              >
+                <div className="text-5xl mb-4">📘</div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-2">Book Page Practice</h3>
+                <p className="text-slate-700 font-medium mb-4">
+                  Upload a page → MCQs generated from the exact content of your book page
+                </p>
+                <p className="text-sm text-slate-600 mb-6">
+                  Ensure no important line of your book is missed in practice.
+                </p>
+                <div className="rounded-xl bg-gradient-to-r from-purple-600 to-purple-700 text-white px-6 py-3 text-center font-bold group-hover:from-purple-700 group-hover:to-purple-800 transition-all duration-200">
+                  Start →
+                </div>
+              </div>
+
+              {/* Topic Practice */}
+              <div
+                onClick={() => setMode('manual')}
+                className="group cursor-pointer rounded-3xl border-2 border-indigo-400 bg-gradient-to-br from-white via-indigo-50 to-indigo-100 p-8 shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 transform"
+              >
+                <div className="text-5xl mb-4">🧠</div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-2">Topic Practice</h3>
+                <p className="text-slate-700 font-medium mb-4">
+                  Select book, chapter, topic → Quick AI-generated MCQs for fast revision
+                </p>
+                <p className="text-sm text-slate-600 mb-6">
+                  Perfect for quick revision and concept reinforcement.
+                </p>
+                <div className="rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 text-white px-6 py-3 text-center font-bold group-hover:from-indigo-700 group-hover:to-indigo-800 transition-all duration-200">
+                  Start →
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Back button when in a mode */}
         {mode && (
           <div className="mb-8 flex justify-center">
             <button
@@ -321,22 +370,14 @@ export default function App() {
           </div>
         )}
 
-        {/* MANUAL MODE SECTION */}
-        {mode === null || mode === 'manual' ? (
+        {/* TOPIC PRACTICE SECTION */}
+        {mode === 'manual' ? (
           <section className="mb-8 rounded-3xl border-2 border-indigo-400 bg-gradient-to-br from-white to-indigo-50 p-8 shadow-2xl hover:shadow-3xl transition-shadow duration-300">
-            <div className="flex items-center justify-between mb-6">
+            <div className="mb-6">
               <div>
-                <h2 className="text-2xl font-bold text-slate-900">📖 Manual Practice Mode</h2>
-                <p className="text-sm text-slate-600 mt-1">Select a book, chapter, and topic</p>
+                <h2 className="text-3xl font-bold text-slate-900">🧠 Topic Practice</h2>
+                <p className="text-lg text-slate-600 mt-2">Select book, chapter, and topic for quick AI-generated MCQs</p>
               </div>
-              {mode === null && (
-                <button
-                  onClick={() => setMode('manual')}
-                  className="rounded-full bg-gradient-to-r from-indigo-600 to-indigo-700 px-8 py-3 text-sm font-bold text-white hover:from-indigo-700 hover:to-indigo-800 transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105 transform"
-                >
-                  Choose This Mode →
-                </button>
-              )}
             </div>
 
             {mode === 'manual' && (
@@ -429,22 +470,14 @@ export default function App() {
           </section>
         ) : null}
 
-        {/* OCR MODE SECTION */}
-        {mode === null || mode === 'ocr' ? (
+        {/* BOOK PAGE PRACTICE SECTION */}
+        {mode === 'ocr' ? (
           <section className="mb-8 rounded-3xl border-2 border-purple-400 bg-gradient-to-br from-white to-purple-50 p-8 shadow-2xl hover:shadow-3xl transition-shadow duration-300">
-            <div className="flex items-center justify-between mb-6">
+            <div className="mb-6">
               <div>
-                <h2 className="text-2xl font-bold text-slate-900">📸 OCR Practice Mode</h2>
-                <p className="text-sm text-slate-600 mt-1">Upload any book page and extract questions</p>
+                <h2 className="text-3xl font-bold text-slate-900">📘 Book Page Practice</h2>
+                <p className="text-lg text-slate-600 mt-2">Upload a page from your book → MCQs generated from exact content</p>
               </div>
-              {mode === null && (
-                <button
-                  onClick={() => setMode('ocr')}
-                  className="rounded-full bg-gradient-to-r from-purple-600 to-purple-700 px-8 py-3 text-sm font-bold text-white hover:from-purple-700 hover:to-purple-800 transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105 transform"
-                >
-                  Choose This Mode →
-                </button>
-              )}
             </div>
 
             {mode === 'ocr' && (
@@ -568,9 +601,9 @@ export default function App() {
             <div className="rounded-3xl border-2 border-dashed border-white border-opacity-30 bg-white bg-opacity-5 p-8 text-center backdrop-blur-sm">
               <div className="text-4xl mb-3">💭</div>
               <div className="text-lg font-semibold text-white">
-                {mode === 'manual' ? 'Select a book, chapter, and topic, then click "Start Practice"' : 'Upload an image and extract text'}
+                {mode === 'manual' ? 'Select a book, chapter, and topic, then click "🚀 Start Practice"' : 'Upload an image and extract text'}
               </div>
-              <p className="text-slate-300 text-sm mt-2">Questions will appear here</p>
+              <p className="text-slate-300 text-sm mt-2">Questions will appear here once ready</p>
             </div>
           )}
 
@@ -578,9 +611,9 @@ export default function App() {
             <div className="rounded-3xl border-2 border-dashed border-white border-opacity-30 bg-white bg-opacity-5 p-8 text-center backdrop-blur-sm">
               <div className="text-4xl mb-3">🚀</div>
               <div className="text-lg font-semibold text-white">
-                Choose a mode to get started
+                Ready to start practicing?
               </div>
-              <p className="text-slate-300 text-sm mt-2">Manual Practice or OCR Image Upload</p>
+              <p className="text-slate-300 text-sm mt-2">Select a practice mode above to begin</p>
             </div>
           )}
 
