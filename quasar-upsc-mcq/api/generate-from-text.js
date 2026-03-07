@@ -18,7 +18,7 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const Groq = require('groq-sdk').default || require('groq-sdk')
+    const { default: Groq } = await import('groq-sdk')
     
     function stripCodeFences(text) {
       if (typeof text !== 'string') return ''
@@ -131,7 +131,7 @@ STRICT REQUIREMENTS FOR JSON:
 
     return res.json(parsed)
   } catch (e) {
-    console.error('[/api/generate/from-text] Error:', e?.message || String(e))
-    return res.status(500).json({ error: `Generation failed`, details: e?.message })
+    console.error('[/api/generate/from-text] Error:', e?.message || String(e), e.stack)
+    return res.status(500).json({ error: 'Generation failed', details: e?.message })
   }
 }

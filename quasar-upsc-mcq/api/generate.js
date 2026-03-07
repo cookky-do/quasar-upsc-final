@@ -1,14 +1,8 @@
-const Groq = require('groq-sdk').default || require('groq-sdk');
-
 module.exports = async function handler(req, res) {
-  // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', 'true')
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-  )
+  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version')
 
   if (req.method === 'OPTIONS') {
     res.status(200).end()
@@ -20,13 +14,17 @@ module.exports = async function handler(req, res) {
   }
 
   try {
+    const groqKey = process.env.GROQ_API_KEY
+    if (!groqKey) {
+      return res.status(500).json({ error: 'Missing GROQ_API_KEY' })
+    }
+
+    // Use dynamic import for ESM module
+    const { default: Groq } = await import('groq-sdk')
     
     function stripCodeFences(text) {
       if (typeof text !== 'string') return ''
-      return text
-        .replace(/^\s*```(?:json)?\s*/i, '')
-        .replace(/\s*```\s*$/i, '')
-        .trim()
+      return text.replace(/^\s*```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '').trim()
     }
 
     function tryExtractJsonObject(text) {
@@ -42,19 +40,13 @@ module.exports = async function handler(req, res) {
       return v.trim()
     }
 
-    const groqKey = process.env.GROQ_API_KEY
-    if (!groqKey) {
-      return res.status(500).json({ error: 'Missing GROQ_API_KEY on server' })
-    }
-
     const bookName = requireString(req.body?.bookName, 'bookName')
     const chapterName = requireString(req.body?.chapterName, 'chapterName')
     const topic = typeof req.body?.topic === 'string' ? req.body.topic : ''
     const paragraphNumberRaw = req.body?.paragraphNumber
-    const paragraphNumber =
-      typeof paragraphNumberRaw === 'number' ? paragraphNumberRaw : Number(paragraphNumberRaw)
+    const paragraphNumber = typeof paragraphNumberRaw === 'number' ? paragraphNumberRaw : Number(paragraphNumberRaw)
 
-    if (!Number.isFinite(paragraphNumber) || paragraphNumber < 1) {
+    if (!Number.isFinite(paragraphNumber) || paragraphNumber < 0) {
       return res.status(400).json({ error: 'Invalid paragraphNumber' })
     }
 
@@ -133,7 +125,7 @@ STRICT REQUIREMENTS FOR JSON:
 
     return res.json(parsed)
   } catch (e) {
-    console.error('[/api/generate] Error:', e?.message || String(e))
-    return res.status(500).json({ error: `Generation failed`, details: e?.message })
+    console.error('[/api/generate] Error:', e?.message || String(e), e.stack)
+    return res.status(500).json({ error: 'Generation failed', details: e?.message })
   }
 }
