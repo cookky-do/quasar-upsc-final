@@ -1,0 +1,10 @@
+{
+  "name": "quasar-workspace",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix vocal-pitch-trainer run dev",
+    "build": "npm --prefix vocal-pitch-trainer run build",
+    "preview": "npm --prefix vocal-pitch-trainer run preview"
+  }
+}
+
