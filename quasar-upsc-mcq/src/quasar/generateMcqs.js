@@ -1,3 +1,14 @@
+// Get API base URL based on environment
+function getApiBaseUrl() {
+  // If running on Vercel production with Railway backend
+  if (import.meta.env.PROD) {
+    // Use the Railway backend URL from Vercel env variable
+    return import.meta.env.VITE_API_URL || 'http://localhost:8787'
+  }
+  // Development - use localhost
+  return 'http://localhost:8787'
+}
+
 function stripCodeFences(text) {
   if (typeof text !== 'string') return ''
   return text
@@ -46,7 +57,7 @@ export async function generatePracticeMcqs({ bookName, chapterName, topic, parag
   const para = typeof paragraphNumber === 'number' ? paragraphNumber : Number(paragraphNumber)
   if (!Number.isFinite(para) || para < 1) throw new Error('Invalid paragraphNumber')
 
-  const res = await fetch('/api/generate', {
+  const res = await fetch(`${getApiBaseUrl()}/api/generate`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -80,7 +91,7 @@ export async function generateMcqsFromExtractedText({ paragraphText, paragraphIn
   const idx = typeof paragraphIndex === 'number' ? paragraphIndex : Number(paragraphIndex)
   if (!Number.isFinite(idx) || idx < 0) throw new Error('Invalid paragraphIndex')
 
-  const res = await fetch('/api/generate/from-text', {
+  const res = await fetch(`${getApiBaseUrl()}/api/generate/from-text`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
