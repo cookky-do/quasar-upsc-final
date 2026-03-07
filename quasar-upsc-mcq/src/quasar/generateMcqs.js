@@ -1,11 +1,11 @@
 // Get API base URL based on environment
 function getApiBaseUrl() {
-  // If running on Vercel production, use same domain for API functions
+  // Use Railway backend for production
   if (import.meta.env.PROD) {
-    return ''  // Use same domain for Vercel API functions
+    return 'https://quasar-upsc-mcq-production.up.railway.app'
   }
   // Development - use localhost
-  return 'http://localhost:5173'
+  return 'http://localhost:8787'
 }
 
 function stripCodeFences(text) {
