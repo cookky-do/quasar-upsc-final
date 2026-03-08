@@ -9,7 +9,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "api": "node simple-server.js",
-    "start": "node render-server-cjs.js"
+    "start": "node index.js"
   },
   "engines": {
     "node": ">=20.0.0"
@@ -27,6 +27,7 @@
     "dotenv": "^16.6.1",
     "express": "^5.1.0",
     "groq-sdk": "^0.20.0",
+    "cors": "^2.8.5",
     "lucide-react": "^0.564.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
