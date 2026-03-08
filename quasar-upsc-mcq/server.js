@@ -250,6 +250,6 @@ app.use((err, req, res, next) => {
 
 const port = Number(process.env.PORT || 8787)
 app.listen(port, () => {
-  // Intentionally minimal logs for MVP.
+ console.log(`Server running on port ${port}`)
 })
 
