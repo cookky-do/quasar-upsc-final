@@ -3,7 +3,6 @@
   "description": "AI-powered UPSC Prelims MCQ Generator with Image OCR and Pattern-based Questions",
   "private": true,
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
