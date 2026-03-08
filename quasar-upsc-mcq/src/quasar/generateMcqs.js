@@ -1,52 +1,6 @@
-// Get API base URL based on environment (local dev, Vercel, Render, etc.)
+// Simple API call - FINAL VERSION
 function getApiBaseUrl() {
-  // 1. Explicit override via Vite env, if provided
-  try {
-    // This will be tree-shaken away in non-Vite environments
-    // eslint-disable-next-line no-undef
-    const explicit = import.meta?.env?.VITE_API_BASE_URL
-    if (typeof explicit === 'string' && explicit.trim()) {
-      console.log('Using VITE_API_BASE_URL:', explicit.trim())
-      return explicit.trim()
-    }
-  } catch {
-    // ignore – import.meta may not exist outside Vite
-  }
-
-  if (typeof window !== 'undefined') {
-    const origin = window.location.origin || ''
-
-    // 2. Local development: use the simple mock API server
-    if (origin.includes('localhost')) {
-      const localApi = 'http://localhost:8787'
-      console.log('Using local API:', localApi)
-      return localApi
-    }
-
-    // 3. Vercel frontend → talk to Render backend
-    if (origin.includes('vercel.app')) {
-      const renderBase = 'https://quasar-upsc-final-1.onrender.com'
-      console.log('Using Render API for Vercel frontend:', renderBase)
-      return renderBase
-    }
-
-    // 4. Frontend itself hosted on Render – use same origin
-    if (origin.includes('onrender.com')) {
-      console.log('Using same-origin Render API:', origin)
-      return origin
-    }
-
-    // 5. Fallback to same-origin for any other host
-    if (origin) {
-      console.log('Using origin API:', origin)
-      return origin
-    }
-  }
-
-  // 6. Final safety fallback – public Render backend
-  const fallback = 'https://quasar-upsc-final-1.onrender.com'
-  console.log('Using fallback Render API:', fallback)
-  return fallback
+  return 'https://quasar-upsc-final-1.onrender.com'
 }
 
 function stripCodeFences(text) {
@@ -91,39 +45,37 @@ function validatePracticePayload(payload) {
   return payload
 }
 
-export async function generatePracticeMcqs({ bookName, chapterName, topic, paragraphNumber }) {
-  const cleanBook = requireString(bookName, 'bookName')
-  const cleanChapter = requireString(chapterName, 'chapterName')
-  const para = typeof paragraphNumber === 'number' ? paragraphNumber : Number(paragraphNumber)
-  if (!Number.isFinite(para) || para < 1) throw new Error('Invalid paragraphNumber')
-
-  const res = await fetch(`${getApiBaseUrl()}/api/generate`, {
+export async function generateMcqsFromBookIndex({ bookName, chapterName, topic = '', paragraphNumber }) {
+  const baseUrl = getApiBaseUrl()
+  console.log('Calling API:', baseUrl)
+  
+  const res = await fetch(`${baseUrl}/api/generate`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      bookName: cleanBook,
-      chapterName: cleanChapter,
-      topic: typeof topic === 'string' ? topic : '',
-      paragraphNumber: para,
+      bookName,
+      chapterName,
+      topic,
+      paragraphNumber,
     }),
   })
 
   if (!res.ok) {
-    throw new Error(
-      'API not available on Vercel. To use the app:\n\n' +
-      '1. Open PowerShell Terminal 1:\n' +
-      '   cd c:\\Users\\ATC\\Desktop\\final\\quasar-upsc-mcq\n' +
-      '   $env:GROQ_API_KEY=\x27[your-groq-api-key]\x27\n' +
-      '   npm run api\n\n' +
-      '2. Open PowerShell Terminal 2:\n' +
-      '   cd c:\\Users\\ATC\\Desktop\\final\\quasar-upsc-mcq\n' +
-      '   npm run dev\n\n' +
-      '3. Visit https://quasar-upsc-final.onrender.com' +
-      'Rest API works perfectly when run locally!'
-    )
+    throw new Error(`API Error: ${res.status} - ${res.statusText}`)
   }
+
   const data = await res.json()
-  return validatePracticePayload(data)
+  console.log('API Response:', data)
+  return data
+}
+
+export async function generatePracticeMcqs({ book_name, chapter_name, concept_source, paragraph_number }) {
+  return generateMcqsFromBookIndex({
+    bookName: book_name,
+    chapterName: chapter_name,
+    topic: concept_source,
+    paragraphNumber: paragraph_number
+  })
 }
 
 export async function generateMcqsFromExtractedText({ paragraphText, paragraphIndex = 0 }) {
@@ -131,7 +83,10 @@ export async function generateMcqsFromExtractedText({ paragraphText, paragraphIn
   const idx = typeof paragraphIndex === 'number' ? paragraphIndex : Number(paragraphIndex)
   if (!Number.isFinite(idx) || idx < 0) throw new Error('Invalid paragraphIndex')
 
-  const res = await fetch(`${getApiBaseUrl()}/api/generate/from-text`, {
+  const baseUrl = getApiBaseUrl()
+  console.log('Calling API:', baseUrl)
+  
+  const res = await fetch(`${baseUrl}/api/generate/from-text`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
