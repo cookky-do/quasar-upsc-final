@@ -9,7 +9,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "api": "node simple-server.js",
-    "start": "node render-server.js"
+    "start": "node render-server-cjs.js"
   },
   "engines": {
     "node": ">=20.0.0"
