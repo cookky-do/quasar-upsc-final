@@ -5,6 +5,8 @@
     "dev": "npm --prefix vocal-pitch-trainer run dev",
     "build": "npm --prefix vocal-pitch-trainer run build",
     "preview": "npm --prefix vocal-pitch-trainer run preview"
+  },
+  "dependencies": {
+    "body-parser": "^2.2.2"
   }
 }
-

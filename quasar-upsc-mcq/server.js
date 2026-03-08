@@ -4,6 +4,7 @@ import Groq from 'groq-sdk'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import cors from 'cors'
+import bodyParser from 'body-parser'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const envPath = path.join(__dirname, '.env')
@@ -19,7 +20,8 @@ app.use(cors({
   credentials: true
 }))
 
-app.use(express.json({ limit: '1mb' }))
+app.use(bodyParser.json({ limit: '1mb' }))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 function stripCodeFences(text) {
   if (typeof text !== 'string') return ''
@@ -48,6 +50,8 @@ app.post('/api/generate', async (req, res) => {
     if (!groqKey) {
       return res.status(500).json({ error: 'Missing GROQ_API_KEY on server' })
     }
+
+    console.log(JSON.stringify(req.body));
 
     const bookName = requireString(req.body?.bookName, 'bookName')
     const chapterName = requireString(req.body?.chapterName, 'chapterName')
