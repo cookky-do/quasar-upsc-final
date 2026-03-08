@@ -1,6 +1,6 @@
 // Ultra-simple API call - guaranteed to work
 export async function generateMcqsFromBookIndex(payload) {
-  const API_URL = 'https://quasar-upsc-final-1.onrender.com/api/generate'
+  const API_URL = 'https://quasar-upsc-final-s5t4.onrender.com/api/generate'
   
   try {
     const response = await fetch(API_URL, {

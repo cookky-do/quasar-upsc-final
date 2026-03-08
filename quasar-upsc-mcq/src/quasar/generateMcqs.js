@@ -1,6 +1,6 @@
 // Simple API call - FINAL VERSION
 function getApiBaseUrl() {
-  return 'https://quasar-upsc-final-1.onrender.com'
+  return 'https://quasar-upsc-final-s5t4.onrender.com'
 }
 
 function stripCodeFences(text) {
