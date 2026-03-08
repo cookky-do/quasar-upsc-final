@@ -47,9 +47,10 @@ function validatePracticePayload(payload) {
 
 export async function generateMcqsFromBookIndex({ bookName, chapterName, topic = '', paragraphNumber }) {
   const baseUrl = getApiBaseUrl()
-  console.log('Calling API:', baseUrl)
+  const cacheBuster = Date.now() // Force no cache
+  console.log('Calling API:', `${baseUrl}/api/generate?t=${cacheBuster}`)
   
-  const res = await fetch(`${baseUrl}/api/generate`, {
+  const res = await fetch(`${baseUrl}/api/generate?t=${cacheBuster}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
