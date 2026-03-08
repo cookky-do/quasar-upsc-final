@@ -48,6 +48,34 @@ app.post('/api/generate', (req, res) => {
   res.json(response);
 });
 
+// API route for text-based generation
+app.post('/api/generate/from-text', (req, res) => {
+  console.log('Text API called:', req.body);
+  
+  const response = {
+    book_name: "Extracted Text",
+    chapter_name: "Custom Content",
+    concept_source: "Text Analysis",
+    paragraph_number: req.body.paragraphIndex || 0,
+    questions: [
+      {
+        question: "Based on the provided text, which of the following statements is most accurate?",
+        options: [
+          "A. Statement 1 is correct",
+          "B. Statement 2 is correct",
+          "C. Both statements are correct",
+          "D. Neither statement is correct"
+        ],
+        answer: "C",
+        explanation: "The text analysis indicates that both statements have merit based on the context provided.",
+        memory_trick: "Text - Analyze both statements together"
+      }
+    ]
+  };
+  
+  res.json(response);
+});
+
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`CommonJS server running on port ${PORT}`);
