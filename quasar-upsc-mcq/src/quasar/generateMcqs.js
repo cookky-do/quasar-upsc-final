@@ -27,7 +27,7 @@ function validatePracticePayload(payload) {
     throw new Error('Invalid paragraph_number')
   }
   if (!Array.isArray(payload.questions)) throw new Error('Invalid questions')
-  if (payload.questions.length < 3) throw new Error('Expected at least 3 questions')
+  if (payload.questions.length < 1) throw new Error('Expected at least 1 question')
   if (payload.questions.length > 3) payload.questions = payload.questions.slice(0, 3)
 
   payload.questions.forEach((q, idx) => {
