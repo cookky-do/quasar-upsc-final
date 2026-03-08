@@ -1,7 +1,7 @@
 // Get API base URL based on environment
 function getApiBaseUrl() {
-  // Use localhost for now
-  return 'http://localhost:8787'
+  // Use Render backend for production
+  return 'https://quasar-upsc-final-1.onrender.com'
 }
 
 function stripCodeFences(text) {
