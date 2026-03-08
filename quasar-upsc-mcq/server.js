@@ -3,12 +3,22 @@ import express from 'express'
 import Groq from 'groq-sdk'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import cors from 'cors'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const envPath = path.join(__dirname, '.env')
 dotenv.config({ path: envPath })
 
 const app = express()
+
+// CORS configuration - MOST PERMISSIVE
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  credentials: true
+}))
+
 app.use(express.json({ limit: '1mb' }))
 
 function stripCodeFences(text) {

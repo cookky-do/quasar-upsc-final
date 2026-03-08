@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "api": "node simple-server.js",
-    "start": "node index-final.js"
+    "start": "node server.js"
   },
   "engines": {
     "node": ">=20.0.0"
