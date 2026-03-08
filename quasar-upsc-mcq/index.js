@@ -3,11 +3,12 @@ const cors = require('cors');
 
 const app = express();
 
-// CORS for all origins
+// CORS for all origins - FINAL FIX
 app.use(cors({
-  origin: ['https://quasar-upsc-mcq.vercel.app', 'http://localhost:5176', 'http://localhost:5175'],
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type']
+  origin: '*',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 app.use(express.json());
