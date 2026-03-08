@@ -1,4 +1,5 @@
 // Simple API call - FINAL VERSION
+import axios from 'axios'
 function getApiBaseUrl() {
   return 'https://quasar-upsc-final-s5t4.onrender.com'
 }
@@ -48,25 +49,23 @@ function validatePracticePayload(payload) {
 export async function generateMcqsFromBookIndex({ bookName, chapterName, topic = '', paragraphNumber }) {
   const baseUrl = getApiBaseUrl()
   console.log('Calling API:', `${baseUrl}/api/generate`)
-  
-    const res = await fetch(`${baseUrl}/api/generate`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        bookName,
-        chapterName,
-        topic,
-        paragraphNumber,
-      }),
+  try {
+    const response = await axios.post(`${baseUrl}/api/generate`, {
+      bookName,
+      chapterName,
+      topic,
+      paragraphNumber,
     })
-
-  if (!res.ok) {
-    throw new Error(`API Error: ${res.status} - ${res.statusText}`)
+    console.log('API Response:', response.data)
+    return response.data
+  } catch (error) {
+    if (error.response) {
+      throw new Error(`API Error: ${error.response.status} - ${error.response.statusText}`)
+    } else {
+      throw new Error(`API Error: ${error.message}`)
+    }
   }
-
-  const data = await res.json()
-  console.log('API Response:', data)
-  return data
+}
 }
 
 export async function generatePracticeMcqs({ book_name, chapter_name, concept_source, paragraph_number }) {
