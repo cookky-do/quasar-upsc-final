@@ -5,9 +5,9 @@ const cors = require('cors');
 
 const app = express();
 
-// CORS - MOST PERMISSIVE
+// CORS - Allow specific Vercel domain
 app.use(cors({
-  origin: '*',
+  origin: ['https://quasar-upsc-mcq.vercel.app', 'http://localhost:5176', 'http://localhost:5175', '*'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   credentials: true
