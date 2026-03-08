@@ -1,8 +1,8 @@
 // Get API base URL based on environment
 function getApiBaseUrl() {
-  // Use Render backend for production (better free tier)
+  // Use localhost for testing
   if (import.meta.env.PROD) {
-    return 'https://quasar-upsc-final-s5t4.onrender.com'
+    return 'http://localhost:8787'
   }
   // Development - use localhost
   return 'http://localhost:8787'
