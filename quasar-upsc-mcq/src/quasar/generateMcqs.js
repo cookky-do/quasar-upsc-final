@@ -66,7 +66,6 @@ export async function generateMcqsFromBookIndex({ bookName, chapterName, topic =
     }
   }
 }
-}
 
 export async function generatePracticeMcqs({ book_name, chapter_name, concept_source, paragraph_number }) {
   return generateMcqsFromBookIndex({
