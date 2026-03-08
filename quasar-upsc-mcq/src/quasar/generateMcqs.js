@@ -2,7 +2,7 @@
 function getApiBaseUrl() {
   // Use Render backend for production (better free tier)
   if (import.meta.env.PROD) {
-    return 'https://quasar-upsc-mcq.onrender.com'
+    return 'https://quasar-upsc-final-s5t4.onrender.com'
   }
   // Development - use localhost
   return 'http://localhost:8787'
