@@ -1,6 +1,6 @@
 // Get API base URL based on environment
 function getApiBaseUrl() {
-  // Use Render backend for production
+  // Use Render backend - correct URL
   return 'https://quasar-upsc-final-1.onrender.com'
 }
 
