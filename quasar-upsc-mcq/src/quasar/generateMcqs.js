@@ -1,10 +1,6 @@
 // Get API base URL based on environment
 function getApiBaseUrl() {
-  // Use localhost for testing
-  if (import.meta.env.PROD) {
-    return 'http://localhost:8787'
-  }
-  // Development - use localhost
+  // Use localhost for now
   return 'http://localhost:8787'
 }
 
