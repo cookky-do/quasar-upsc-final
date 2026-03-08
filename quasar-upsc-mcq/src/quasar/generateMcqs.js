@@ -1,8 +1,52 @@
-// Get API base URL based on environment
+// Get API base URL based on environment (local dev, Vercel, Render, etc.)
 function getApiBaseUrl() {
-  // Use Render backend - correct URL
-  console.log('Using Render API:', 'https://quasar-upsc-final-1.onrender.com')
-  return 'https://quasar-upsc-final-1.onrender.com'
+  // 1. Explicit override via Vite env, if provided
+  try {
+    // This will be tree-shaken away in non-Vite environments
+    // eslint-disable-next-line no-undef
+    const explicit = import.meta?.env?.VITE_API_BASE_URL
+    if (typeof explicit === 'string' && explicit.trim()) {
+      console.log('Using VITE_API_BASE_URL:', explicit.trim())
+      return explicit.trim()
+    }
+  } catch {
+    // ignore – import.meta may not exist outside Vite
+  }
+
+  if (typeof window !== 'undefined') {
+    const origin = window.location.origin || ''
+
+    // 2. Local development: use the simple mock API server
+    if (origin.includes('localhost')) {
+      const localApi = 'http://localhost:8787'
+      console.log('Using local API:', localApi)
+      return localApi
+    }
+
+    // 3. Vercel frontend → talk to Render backend
+    if (origin.includes('vercel.app')) {
+      const renderBase = 'https://quasar-upsc-final-1.onrender.com'
+      console.log('Using Render API for Vercel frontend:', renderBase)
+      return renderBase
+    }
+
+    // 4. Frontend itself hosted on Render – use same origin
+    if (origin.includes('onrender.com')) {
+      console.log('Using same-origin Render API:', origin)
+      return origin
+    }
+
+    // 5. Fallback to same-origin for any other host
+    if (origin) {
+      console.log('Using origin API:', origin)
+      return origin
+    }
+  }
+
+  // 6. Final safety fallback – public Render backend
+  const fallback = 'https://quasar-upsc-final-1.onrender.com'
+  console.log('Using fallback Render API:', fallback)
+  return fallback
 }
 
 function stripCodeFences(text) {
