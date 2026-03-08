@@ -2,10 +2,23 @@ const express = require('express');
 const cors = require('cors');
 
 const app = express();
-app.use(cors());
+
+// CORS for all origins
+app.use(cors({
+  origin: ['https://quasar-upsc-mcq.vercel.app', 'http://localhost:5176', 'http://localhost:5175'],
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type']
+}));
+
 app.use(express.json());
 
+// Root route
+app.get('/', (req, res) => {
+  res.json({ message: 'UPSC MCQ API is running!' });
+});
+
 app.post('/api/generate', (req, res) => {
+  console.log('API called:', req.body);
   res.json({
     book_name: "Indian Polity",
     chapter_name: "Fundamental Rights",
